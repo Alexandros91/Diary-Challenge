@@ -54,5 +54,25 @@ RSpec.describe 'integration' do
     end
   end
 
+  describe '#find_best_entry_for_reading_time' do
+    context 'when the reading pace is an invalid number' do
+      it 'fails' do
+        diary = Diary.new
+        diary_entry_1 = DiaryEntry.new('title 1', 'contents 1')
+        diary.add(diary_entry_1)
+        expect { diary.find_best_entry_for_reading_time(0, 5) }.to raise_error 'The reading pace must be more than 0'
+      end
+    end
 
+    context 'when the reading pace is a valid number' do
+      it 'returns the time needed to read all contents' do
+        diary = Diary.new
+        diary_entry_1 = DiaryEntry.new('title 1', 'contents ' * 400)
+        diary_entry_2 = DiaryEntry.new('title 2', 'contents ' * 500)
+        diary.add(diary_entry_1)
+        diary.add(diary_entry_2)
+        expect(diary.find_best_entry_for_reading_time(100, 4)).to eq diary_entry_1
+      end
+    end
+  end
 end

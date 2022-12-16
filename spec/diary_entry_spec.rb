@@ -32,4 +32,22 @@ RSpec.describe DiaryEntry do
     end
   end
 
+  describe '#reading_chunk' do
+    context 'when the reading pace is an invalid number' do
+      it 'fails' do
+        diary_entry = DiaryEntry.new('title 1', 'contents 1')
+        expect { diary_entry.reading_chunk(0, 5) }.to raise_error 'The reading pace must be more than 0'
+      end
+    end
+
+    context 'when the reading pace is a valid number' do
+      it 'returns the time needed to read all contents' do
+        diary_entry = DiaryEntry.new('title 1', 'There are the contents of one more entry in the diary')
+        diary_entry.reading_chunk(2, 2)
+        diary_entry.reading_chunk(1, 3)
+        expect(diary_entry.reading_chunk(2, 2)).to eq 'entry in the diary'
+      end
+    end
+  end
+
 end

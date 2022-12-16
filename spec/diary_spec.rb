@@ -21,4 +21,11 @@ RSpec.describe Diary do
       expect(diary.reading_time(50)).to eq 0
     end
   end
+
+  describe '#find_best_entry_for_reading_time' do
+    it 'initially returns no entry' do
+      diary = Diary.new
+      expect(diary.find_best_entry_for_reading_time(80, 6)).to eq nil
+    end
+  end
 end
